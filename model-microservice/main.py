@@ -57,6 +57,9 @@ def get_conversations(id, chat_id):
     
     supervisor = next((obj for obj in class_supervisors[id] if obj.chat_id == chat_id), None)
 
+    if supervisor == None : 
+        return jsonify({ "conversations" : [] })
+
     conversations = supervisor.logs
     
     return jsonify({ "conversations" : conversations })
