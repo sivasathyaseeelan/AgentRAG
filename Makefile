@@ -41,7 +41,15 @@ model-microservice-clean: model-microservice-stop
 
 # Default target for database operations
 .PHONY: database-up-create
-database-up-create: database-up database-create
+database-up-create:
+	cd database && docker-compose up -d
+	until docker exec postgres-container pg_isready -U myuser; do \
+		echo "Waiting for PostgreSQL to be ready..."; \
+		sleep 2; \
+	done
+	docker exec -i postgres-container psql -U myuser -d mydatabase < ./backend/delete.sql
+	docker exec -i postgres-container psql -U myuser -d mydatabase < ./backend/schema.sql
+
 
 # Start the database container
 .PHONY: database-up
@@ -58,9 +66,6 @@ database-create:
 database-down:
 	docker stop postgres-container
 	docker rm postgres-container
-
-
-
 
 
 

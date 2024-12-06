@@ -8,7 +8,7 @@ POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD", "mypassword")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST", "localhost")
 POSTGRES_DB = os.getenv("POSTGRES_DB", "mydatabase")
 
-DATABASE_URL = f"postgresql+psycopg2://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
+DATABASE_URL = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}/{POSTGRES_DB}"
 
 engine = create_engine(DATABASE_URL)
 print("Database URL:", DATABASE_URL)
